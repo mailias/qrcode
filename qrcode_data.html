@@ -3,6 +3,12 @@
 
 <head>
     <title>QR Code</title>
+
+    <style>
+        code {
+            font-family: monospace;
+        }
+    </style>
 </head>
 
 <body>
@@ -11,7 +17,7 @@
     <div style="text-align: center;">
 
         <form>
-            <input id="url" />
+            <textarea id="qr-data"></textarea>
             <input id="color" type="text" value="#000" />
             <input id="bgcolor" type="text" value="#0000" />
             <button type="button" onclick="generateQrcode()">create qrcode</button>
@@ -26,7 +32,7 @@
         function generateQrcode() {
 
             const data = {
-                url: document.getElementById('url').value,
+                data: document.getElementById('qr-data').value,
                 ts: new Date().getTime(),
                 color: document.getElementById('color').value,
                 bgcolor: document.getElementById('bgcolor').value
@@ -36,13 +42,13 @@
             qrDiv.style = 'margin:50px';
             qrDiv.innerHTML = `
                 <canvas id="qrcode${data.ts}"></canvas><br>
-                <a id="url${data.ts}" target="_blank">${data.url}</a>
+                <code id="data${data.ts}">${data.data}</code>
             `;
 
             document.getElementById('output').appendChild(qrDiv);
 
             var canvas = document.getElementById(`qrcode${data.ts}`);
-            QRCode.toCanvas(canvas, data.url,
+            QRCode.toCanvas(canvas, data.data,
                 {
                     errorCorrectionLevel: 'H',
                     width: 500,
@@ -56,8 +62,8 @@
                 }
             );
 
-            var link = document.getElementById(`url${data.ts}`);
-            link.href = url;
+            document.getElementById(`data${data.ts}`).innerHTML = data.data;
+
 
         }
 
