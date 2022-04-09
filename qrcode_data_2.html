@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>QR Code - Data</title>
+
+    <style>
+        code {
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="text-align: center;">
+    
+        <h1>Generate QR Code for data</h1>
+        
+        <form>
+            <div>
+                <label for="qr-data">Data:</label>
+                <textarea id="qr-data"></textarea>
+            </div>
+            <button type="button" onclick="generateQrcode()">create qrcode</button>
+        </form>
+
+        <div id="output"></div>
+
+    </div>
+
+    <script src="node_modules/qrcode-generator/qrcode.js"></script>
+    <script>
+        function generateQrcode() {
+
+            const data = {
+                data: document.getElementById('qr-data').value,
+                ts: new Date().getTime()
+            }
+
+
+            var typeNumber = 0;
+            var errorCorrectionLevel = 'H';
+            var qr = qrcode(typeNumber, errorCorrectionLevel);
+            qr.addData(data.data);
+            qr.make();
+            document.getElementById('output').innerHTML = qr.createSvgTag();
+
+        }
+
+    </script>
+</body>
+
+</html>

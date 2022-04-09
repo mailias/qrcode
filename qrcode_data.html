@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>QR Code</title>
+    <title>QR Code - Data</title>
 
     <style>
         code {
@@ -13,13 +13,26 @@
 
 <body>
 
-
     <div style="text-align: center;">
-
+    
+        <h1>Generate QR Code for data</h1>
+        
         <form>
-            <textarea id="qr-data"></textarea>
-            <input id="color" type="text" value="#000" />
-            <input id="bgcolor" type="text" value="#0000" />
+            <div>
+                <label for="qr-data">Data:</label>
+                <textarea id="qr-data"></textarea>
+            </div>
+            <div>
+                <label for="color">Color:</label>
+                <input id="color" type="text" value="#000" />
+            </div>
+            <div>
+                <label for="bgcolor">Background Color:</label>
+                <input id="bgcolor" type="text" value="#0000" />*
+            </div>
+            <div>
+                * #0000 = transparent
+            </div>
             <button type="button" onclick="generateQrcode()">create qrcode</button>
         </form>
 

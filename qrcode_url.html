@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>QR Code</title>
+    <title>QR Code - URL</title>
 </head>
 
 <body>
@@ -10,11 +10,25 @@
 
     <div style="text-align: center;">
 
+        <h1>Generate QR Code for URL</h1>
+
         <form>
-            <input id="url" />
-            <input id="color" type="text" value="#000" />
-            <input id="bgcolor" type="text" value="#0000" />
-            <button type="button" onclick="generateQrcode()">create qrcode</button>
+            <div>
+                <label for="url">URL:</label>
+                <input id="url" />
+            </div>
+            <div>
+                <label for="color">Color:</label>
+                <input id="color" type="text" value="#000" />
+            </div>
+            <div>
+                <label for="bgcolor">Background Color:</label>
+                <input id="bgcolor" type="text" value="#0000" />*
+            </div>
+            <div>
+                * #0000 = transparent
+            </div>
+            <button type="button" onclick="qrLink()">create qrcode</button>
         </form>
 
         <div id="output"></div>
@@ -23,7 +37,7 @@
 
     <script src="node_modules/qrcode/build/qrcode.js"></script>
     <script>
-        function generateQrcode() {
+        function qrLink() {
 
             const data = {
                 url: document.getElementById('url').value,
