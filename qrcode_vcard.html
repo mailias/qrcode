@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>QR Code - Vcard</title>
+
+    <style>
+        code {
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="text-align: center;">
+    
+        <h1>Generate QR Code Vcard</h1>
+        
+        <form>
+            <div>
+                <label for="color">Color:</label>
+                <input id="color" type="text" value="#000" />
+            </div>
+            <div>
+                <label for="bgcolor">Background Color:</label>
+                <input id="bgcolor" type="text" value="#0000" />*
+            </div>
+            <div>
+                * #0000 = transparent
+            </div>
+            <button type="button" onclick="generateQrcode()">create qrcode</button>
+        </form>
+
+        <div id="output"></div>
+
+    </div>
+
+    <script src="node_modules/qrcode/build/qrcode.js"></script>
+    <script>
+
+        function generateQrcode() {
+
+  
+            const vcard =  "BEGIN:VCARD\r\n" +
+                "VERSION:3.0\r\n" +
+                "N:Mustermann;Max;;;\r\n" +
+                "FN:Max Mustermann\r\n" +
+                "ORG:Example.com Inc.;\r\n" +
+                "TITLE:Imaginary test person\r\n" +
+                "EMAIL;type=INTERNET;type=WORK;type=pref:max@mustermann.de\r\n" +
+                "TEL;type=WORK;type=pref:+49 617 555 1212\r\n" +
+                "TEL;type=WORK:+49 (617) 555-1234\r\n" +
+                "TEL;type=CELL:+49 781 555 1212\r\n" +
+                "TEL;type=HOME:+49 202 555 1212\r\n" +
+                "item1.ADR;type=WORK:;;Musterstraße 2;12345 Musterstadt;Germany\r\n" +
+                "item1.X-ABADR:de\r\n" +
+                "item2.ADR;type=HOME;type=pref:;;3 Acacia Avenue;Hoemtown;MA;02222;USA\r\n" +
+                "item2.X-ABADR:de\r\n" +
+                "NOTE:Dies ist ein Test\, bla bla bla.\r\n" +
+                "item3.URL;type=pref:http\://www.mustermann.de/max\r\n" +
+                "item3.X-ABLabel:_$!<HomePage>!$_\r\n" +
+                "END:VCARD\r\n";
+
+            const data = {
+                data: vcard,
+                ts: new Date().getTime(),
+                color: document.getElementById('color').value,
+                bgcolor: document.getElementById('bgcolor').value
+            }
+
+            var qrDiv = document.createElement('div');
+            qrDiv.style = 'margin:50px';
+            qrDiv.innerHTML = `
+                <canvas id="qrcode${data.ts}"></canvas><br>
+                <code id="data${data.ts}">${data.data}</code>
+            `;
+
+            document.getElementById('output').appendChild(qrDiv);
+
+            var canvas = document.getElementById(`qrcode${data.ts}`);
+            QRCode.toCanvas(canvas, data.data,
+                {
+                    errorCorrectionLevel: 'H',
+                    width: 500,
+                    color: {
+                        dark: data.color,
+                        light: data.bgcolor
+                    }
+                }, function (error) {
+                    if (error) console.error(error)
+                    console.log(`successfully generated qrcode for ${data.url}`);
+                }
+            );
+
+            document.getElementById(`data${data.ts}`).innerHTML = data.data;
+
+
+        }
+
+    </script>
+</body>
+
+</html>
